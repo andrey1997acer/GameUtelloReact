@@ -8,6 +8,11 @@ import Ai from './ai.js';
  */
 export default class Game extends React.Component {
 
+	/**
+	 * Constructor and super props for pemission to all component
+	 * @param {*} props 
+	 * 
+	 */
 	constructor(props) {
 		super(props);
 
@@ -30,6 +35,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Check if some player win
+	 * @function calculateWinner
 	 * @param {Number} xNumbers 
 	 * @param {Number} oNumbers 
 	 */
@@ -38,6 +44,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Flip the tokens/squares.
+	 * @function flipSquares
 	 * @param {Square} squares 
 	 * @param {Number} position 
 	 * @param {Boolean} xIsNext 
@@ -87,6 +94,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Check if the move is valid or no, if not the user cannot check that square
+	 * @function checkAvailableMoves
 	 * @param {*} color 
 	 * @param {*} squares 
 	 */
@@ -97,6 +105,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * It handles all the clicks of the game
+	 * @function handleClick
 	 * @param {Event} i 
 	 */
 	handleClick(i) {
@@ -132,6 +141,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Do the best move that the IA can calculate
+	 * @function doRobotMove
 	 */
 	doRobotMove() {
 		if ((this.state.blackisAi) && (!this.state.xIsNext)) {
@@ -143,6 +153,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Allow the user to go back to a specific movement made in the past
+	 * @function jumpTo
 	 * @param {Number} step 
 	 */
 	jumpTo(step) {
@@ -153,6 +164,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Reset the game and all the stats
+	 * @function resetGame 
 	 */
 	resetGame() {
 		this.jumpTo(0);
