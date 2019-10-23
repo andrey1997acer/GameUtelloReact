@@ -5,6 +5,8 @@ import Square from './square.js';
  * @author Andrey
  * @author Jean Carlo
  */
+
+ 
 export default class Board extends React.Component {
 	/**
 	 * Renders the squares in the screen
@@ -17,14 +19,26 @@ export default class Board extends React.Component {
 	}
 
 	render() {
-		const rows = [];
-		for (let j = 0; j < 8; j++) {
+		const sizeMatriz = this.props.size;
+		const rows = ['','','','','','','','']
+		
+		//Funcional
+		rows.map((itemr,indexr)=>{
+			const cols = ['','','','','','','','']
+					cols.map((itemc,indexc)=>{
+						cols[indexc] =  this.renderSquare(indexc + (indexr * Number(sizeMatriz)))
+					})
+			rows[indexr] = <div className="board-row" key={indexr}>{cols}</div>
+		})
+		
+		//Imperativo
+		/*for (let j = 0; j < sizeMatriz; j++) {
 			const cols = [];
-			for (let i = 0; i < 8; i++) {
+			for (let i = 0; i < sizeMatriz; i++) {
 				cols.push(this.renderSquare(i + (j * 8)))
 			}
 			rows.push(<div className="board-row" key={j}>{cols}</div>);
-		}
+		}*/
 		return (<div>{rows}</div>);
 	}
 }

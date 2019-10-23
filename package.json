@@ -1,8 +1,8 @@
 {
-  "name": "react-othello-game",
+  "name": "GameUtelloReact",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://mborgbrant.github.io/react-othello-game",
+  "homepage": "https://github.com/andrey1997acer/GameUtelloReact",
   "dependencies": {
     "react": "^16.1.1",
     "react-dom": "^16.1.1",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import Board from './board.js';
 import Ai from './ai.js';
 /**
@@ -198,10 +198,12 @@ export default class Game extends React.Component {
 				(winner === 'XO') ? 'It\'s a draw' : 'The winner is ' + (winner === 'X' ? 'white' : 'black') :
 				[this.state.xIsNext ? 'Whites turn' : 'Blacks turn', ' with ', availableMoves.length, ' available moves.'].join('');
 		return (
-			<div className="game">
+			<Fragment>
+			<div className="game container">
+				<div className="row">
 				<div className="game-left-side">
-					<div className="game-board">
-						<Board squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
+					<div className="game-board col-md-12">
+						<Board size={8} squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
 					</div>
 					<div className="game-status">{status}&nbsp;{winner ? <button onClick={() => this.resetGame()}>Play again</button> : ''}</div>
 					
@@ -217,9 +219,11 @@ export default class Game extends React.Component {
 					<div>
 						<input type="checkbox" checked={this.state.blackisAi} onChange={(e) => this.setState({ blackisAi: !this.state.blackisAi })}></input>
 						Make black player to a robot
-					</div>
+						</div>
+						</div>
 				</div>
 			</div>
+			</Fragment>
 		);
 	}
 }
