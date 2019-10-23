@@ -39,6 +39,6 @@ export default class Board extends React.Component {
 			}
 			rows.push(<div className="board-row" key={j}>{cols}</div>);
 		}*/
-		return (<div>{rows}</div>);
+		return (<div className="bg bg-success">{rows}</div>);
 	}
 }

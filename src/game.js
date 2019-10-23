@@ -1,4 +1,4 @@
-import React,{Fragment} from 'react';
+import React, { Fragment } from 'react';
 import Board from './board.js';
 import Ai from './ai.js';
 /**
@@ -128,7 +128,7 @@ export default class Game extends React.Component {
 			stepNumber: history.length,
 			xIsNext: shouldTurnColor,
 		},
-		this.doRobotMove);
+			this.doRobotMove);
 	}
 	/**
 	 * Do the best move that the IA can calculate
@@ -189,40 +189,44 @@ export default class Game extends React.Component {
 		let availableMoves = this.checkAvailableMoves(current.xWasNext, current.squares);
 		let availableMovesOpposite = this.checkAvailableMoves(!current.xWasNext, current.squares);
 
-		if ((availableMoves.length === 0) && (availableMovesOpposite.length === 0))
-		{
+		if ((availableMoves.length === 0) && (availableMovesOpposite.length === 0)) {
 			winner = current.xNumbers === current.oNumbers ? 'XO' : current.xNumbers > current.oNumbers ? 'X' : 'O';
 		}
 		let status =
 			winner ?
-				(winner === 'XO') ? 'It\'s a draw' : 'The winner is ' + (winner === 'X' ? 'white' : 'black') :
-				[this.state.xIsNext ? 'Whites turn' : 'Blacks turn', ' with ', availableMoves.length, ' available moves.'].join('');
+				(winner === 'XO') ? 'It\'s a draw' : 'The winner is ' + (winner === 'X' ? 'blue' : 'black') :
+				[this.state.xIsNext ? 'Blues turn' : 'Blacks turn', ' with ', availableMoves.length, ' available moves.'].join('');
 		return (
 			<Fragment>
-			<div className="game container">
-				<div className="row">
-				<div className="game-left-side">
-					<div className="game-board col-md-12">
-						<Board size={8} squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
+				<div className="game container">
+					<div className="row justify-content-center mt-5">
+						<div className="form-group col-md-12 text-center">
+							<h1>Game Utello in React</h1>
+						</div>
+						<div className="game-left-side">
+							<div className="game-board col-md-12">
+								<Board size={8} squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
+							</div>
+							<div className="game-status form-group col-md-12"><h4>{status}&nbsp;</h4>{winner ? <button className="btn btn-primary" onClick={() => this.resetGame()}>Play again</button> : ''}</div>
+
+							<div></div>
+						</div>
+						<div className="game-info">
+
+							<div><h3><strong>Blue</strong>: {current.xNumbers}</h3></div>
+							<div><h3><strong>Black</strong>: {current.oNumbers}</h3></div>
+
+							<br />
+							<div><label>Select a previous move:</label></div>
+							<div>{selectMoves()}</div>
+							<br />
+							<div className="form-group col-md-12">
+								<input type="checkbox" checked={this.state.blackisAi} onChange={(e) => this.setState({ blackisAi: !this.state.blackisAi })}></input>
+								<h6>Make black player to a robot</h6>
+							</div>
+						</div>
 					</div>
-					<div className="game-status">{status}&nbsp;{winner ? <button onClick={() => this.resetGame()}>Play again</button> : ''}</div>
-					
-					<div></div>
 				</div>
-				<div className="game-info">
-					<div>White markers: {current.xNumbers}</div>
-					<div>Black markers: {current.oNumbers}</div>
-					<br />
-					<div>Select a previous move:</div>
-					<div>{selectMoves()}</div>
-					<br />
-					<div>
-						<input type="checkbox" checked={this.state.blackisAi} onChange={(e) => this.setState({ blackisAi: !this.state.blackisAi })}></input>
-						Make black player to a robot
-						</div>
-						</div>
-				</div>
-			</div>
 			</Fragment>
 		);
 	}
