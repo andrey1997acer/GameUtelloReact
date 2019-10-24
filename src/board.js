@@ -6,7 +6,9 @@ import Square from './square.js';
  * @author Jean Carlo
  */
 
- 
+ /**
+  * @class Board it´s the board of the game
+  */
 export default class Board extends React.Component {
 	/**
 	 * Renders the squares in the screen

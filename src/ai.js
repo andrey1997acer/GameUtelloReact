@@ -3,6 +3,9 @@
  * @author Andrey
  * @author Jean Carlo
  */
+/**
+ * @class Ai its´s the artificial intelligences of the game
+ */
 export default class Ai {
 	constructor(game) {
 		this.game = game;

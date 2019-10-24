@@ -26,7 +26,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
+            <pre class="prettyprint source linenums"><code>import React, { Fragment } from 'react';
 import Board from './board.js';
 import Ai from './ai.js';
 /**
@@ -36,6 +36,11 @@ import Ai from './ai.js';
  */
 export default class Game extends React.Component {
 
+	/**
+	 * Constructor and super props for pemission to all components
+	 * @param {*} props 
+	 * 
+	 */
 	constructor(props) {
 		super(props);
 
@@ -58,6 +63,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Check if some player win
+	 * @function calculateWinner
 	 * @param {Number} xNumbers 
 	 * @param {Number} oNumbers 
 	 */
@@ -66,6 +72,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Flip the tokens/squares.
+	 * @function flipSquares
 	 * @param {Square} squares 
 	 * @param {Number} position 
 	 * @param {Boolean} xIsNext 
@@ -115,6 +122,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Check if the move is valid or no, if not the user cannot check that square
+	 * @function checkAvailableMoves
 	 * @param {*} color 
 	 * @param {*} squares 
 	 */
@@ -125,6 +133,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * It handles all the clicks of the game
+	 * @function handleClick
 	 * @param {Event} i 
 	 */
 	handleClick(i) {
@@ -156,10 +165,11 @@ export default class Game extends React.Component {
 			stepNumber: history.length,
 			xIsNext: shouldTurnColor,
 		},
-		this.doRobotMove);
+			this.doRobotMove);
 	}
 	/**
 	 * Do the best move that the IA can calculate
+	 * @function doRobotMove
 	 */
 	doRobotMove() {
 		if ((this.state.blackisAi) &amp;&amp; (!this.state.xIsNext)) {
@@ -171,6 +181,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Allow the user to go back to a specific movement made in the past
+	 * @function jumpTo
 	 * @param {Number} step 
 	 */
 	jumpTo(step) {
@@ -181,6 +192,7 @@ export default class Game extends React.Component {
 	}
 	/**
 	 * Reset the game and all the stats
+	 * @function resetGame 
 	 */
 	resetGame() {
 		this.jumpTo(0);
@@ -217,37 +229,45 @@ export default class Game extends React.Component {
 		let availableMoves = this.checkAvailableMoves(current.xWasNext, current.squares);
 		let availableMovesOpposite = this.checkAvailableMoves(!current.xWasNext, current.squares);
 
-		if ((availableMoves.length === 0) &amp;&amp; (availableMovesOpposite.length === 0))
-		{
+		if ((availableMoves.length === 0) &amp;&amp; (availableMovesOpposite.length === 0)) {
 			winner = current.xNumbers === current.oNumbers ? 'XO' : current.xNumbers > current.oNumbers ? 'X' : 'O';
 		}
 		let status =
 			winner ?
-				(winner === 'XO') ? 'It\'s a draw' : 'The winner is ' + (winner === 'X' ? 'white' : 'black') :
-				[this.state.xIsNext ? 'Whites turn' : 'Blacks turn', ' with ', availableMoves.length, ' available moves.'].join('');
+				(winner === 'XO') ? 'It\'s a draw' : 'The winner is ' + (winner === 'X' ? 'blue' : 'black') :
+				[this.state.xIsNext ? 'Blues turn' : 'Blacks turn', ' with ', availableMoves.length, ' available moves.'].join('');
 		return (
-			&lt;div className="game">
-				&lt;div className="game-left-side">
-					&lt;div className="game-board">
-						&lt;Board squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
+			&lt;Fragment>
+				&lt;div className="game container">
+					&lt;div className="row justify-content-center mt-5">
+						&lt;div className="form-group col-md-12 text-center">
+							&lt;h1>Game Utello in React&lt;/h1>
+						&lt;/div>
+						&lt;div className="game-left-side">
+							&lt;div className="game-board col-md-12">
+								&lt;Board size={8} squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
+							&lt;/div>
+							&lt;div className="game-status form-group col-md-12">&lt;h4>{status}&amp;nbsp;&lt;/h4>{winner ? &lt;button className="btn btn-primary" onClick={() => this.resetGame()}>Play again&lt;/button> : ''}&lt;/div>
+
+							&lt;div>&lt;/div>
+						&lt;/div>
+						&lt;div className="game-info">
+
+							&lt;div>&lt;h3>&lt;strong>Blue&lt;/strong>: {current.xNumbers}&lt;/h3>&lt;/div>
+							&lt;div>&lt;h3>&lt;strong>Black&lt;/strong>: {current.oNumbers}&lt;/h3>&lt;/div>
+
+							&lt;br />
+							&lt;div>&lt;label>Select a previous move:&lt;/label>&lt;/div>
+							&lt;div>{selectMoves()}&lt;/div>
+							&lt;br />
+							&lt;div className="form-group col-md-12">
+								&lt;input type="checkbox" checked={this.state.blackisAi} onChange={(e) => this.setState({ blackisAi: !this.state.blackisAi })}>&lt;/input>
+								&lt;h6>Make black player to a robot&lt;/h6>
+							&lt;/div>
+						&lt;/div>
 					&lt;/div>
-					&lt;div className="game-status">{status}&amp;nbsp;{winner ? &lt;button onClick={() => this.resetGame()}>Play again&lt;/button> : ''}&lt;/div>
-					
-					&lt;div>&lt;/div>
 				&lt;/div>
-				&lt;div className="game-info">
-					&lt;div>White markers: {current.xNumbers}&lt;/div>
-					&lt;div>Black markers: {current.oNumbers}&lt;/div>
-					&lt;br />
-					&lt;div>Select a previous move:&lt;/div>
-					&lt;div>{selectMoves()}&lt;/div>
-					&lt;br />
-					&lt;div>
-						&lt;input type="checkbox" checked={this.state.blackisAi} onChange={(e) => this.setState({ blackisAi: !this.state.blackisAi })}>&lt;/input>
-						Make black player to a robot
-					&lt;/div>
-				&lt;/div>
-			&lt;/div>
+			&lt;/Fragment>
 		);
 	}
 }</code></pre>
@@ -260,13 +280,13 @@ export default class Game extends React.Component {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calculateWinner">calculateWinner</a></li><li><a href="global.html#checkAvailableMoves">checkAvailableMoves</a></li><li><a href="global.html#doMove">doMove</a></li><li><a href="global.html#doRobotMove">doRobotMove</a></li><li><a href="global.html#flipSquares">flipSquares</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#jumpTo">jumpTo</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderSquare">renderSquare</a></li><li><a href="global.html#resetGame">resetGame</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calculateWinner">calculateWinner</a></li><li><a href="global.html#checkAvailableMoves">checkAvailableMoves</a></li><li><a href="global.html#doMove">doMove</a></li><li><a href="global.html#doRobotMove">doRobotMove</a></li><li><a href="global.html#flipSquares">flipSquares</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#jumpTo">jumpTo</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderSquare">renderSquare</a></li><li><a href="global.html#resetGame">resetGame</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Oct 22 2019 22:35:47 GMT-0600 (GMT-06:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Oct 24 2019 13:34:12 GMT-0600 (GMT-06:00)
 </footer>
 
 <script> prettyPrint(); </script>

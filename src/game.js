@@ -9,7 +9,7 @@ import Ai from './ai.js';
 export default class Game extends React.Component {
 
 	/**
-	 * Constructor and super props for pemission to all component
+	 * Constructor and super props for pemission to all components
 	 * @param {*} props 
 	 * 
 	 */
