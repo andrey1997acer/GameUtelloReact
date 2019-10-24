@@ -6,6 +6,8 @@ import Ai from './ai.js';
  * @author Andrey
  * @author Jean Carlo
  */
+
+ 
 export default class Game extends React.Component {
 
 	/**
@@ -30,7 +32,8 @@ export default class Game extends React.Component {
 			}],
 			stepNumber: 0,
 			xIsNext: true,
-			blackisAi: true
+			blackisAi:this.props.blackisAi
+			
 		}
 	}
 	/**
@@ -176,6 +179,7 @@ export default class Game extends React.Component {
 	 * Render the whole game into the screen.
 	 */
 	render() {
+		const {username1,username2} = this.props;
 		const history = this.state.history.slice();
 		const current = history[this.state.stepNumber];
 
@@ -211,6 +215,9 @@ export default class Game extends React.Component {
 		return (
 			<Fragment>
 				<div className="game container">
+				<div className="form-group col-md-12 mt-4">
+                    <button className="btn btn-danger " onClick={this.props.Finish}>Quit!</button>
+                    </div>
 					<div className="row justify-content-center mt-5">
 						<div className="form-group col-md-12 text-center">
 							<h1>Game Utello in React</h1>
@@ -219,23 +226,25 @@ export default class Game extends React.Component {
 							<div className="game-board col-md-12">
 								<Board size={8} squares={current.squares} availableMoves={availableMoves} onClick={(i) => this.handleClick(i)} />
 							</div>
-							<div className="game-status form-group col-md-12"><h4>{status}&nbsp;</h4>{winner ? <button className="btn btn-primary" onClick={() => this.resetGame()}>Play again</button> : ''}</div>
+							<div className="game-status form-group col-md-12"><h4>{status}&nbsp;</h4>{winner ? <button className="btn btn-info" onClick={() => this.resetGame()}>Play again</button> : ''}</div>
 
 							<div></div>
 						</div>
 						<div className="game-info">
 
-							<div><h3><strong>Blue</strong>: {current.xNumbers}</h3></div>
-							<div><h3><strong>Black</strong>: {current.oNumbers}</h3></div>
+							<div><h1><strong> {username1}: Blue</strong>: {current.xNumbers}</h1></div>
+							<div><h1><strong>{username2}: Black</strong>: {current.oNumbers}</h1></div>
 
+							<br />
+							<br />
 							<br />
 							<div><label>Select a previous move:</label></div>
 							<div>{selectMoves()}</div>
 							<br />
-							<div className="form-group col-md-12">
+							{/*<div className="form-group col-md-12">
 								<input type="checkbox" checked={this.state.blackisAi} onChange={(e) => this.setState({ blackisAi: !this.state.blackisAi })}></input>
 								<h6>Make black player to a robot</h6>
-							</div>
+		</div>:''*/}
 						</div>
 					</div>
 				</div>
