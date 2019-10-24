@@ -220,7 +220,7 @@ export default class Game extends React.Component {
                     </div>
 					<div className="row justify-content-center mt-5">
 						<div className="form-group col-md-12 text-center">
-							<h1>Game Utello in React</h1>
+							<h1>Game Otello in React</h1>
 						</div>
 						<div className="game-left-side">
 							<div className="game-board col-md-12">

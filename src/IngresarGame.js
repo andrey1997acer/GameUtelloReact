@@ -54,7 +54,7 @@ class MainGame extends Component {
                     <div className=" row justify-content-center">
 
                     <div className="form-group col-md-12  text-center">
-                                <h1>Main Menu Game Utello</h1>
+                                <h1>Main Menu Game Otello</h1>
                             </div>
                             <div className="form-group col-md-12 text-center">
                             <h3 for="exampleFormControlSelect1" >Type Game:</h3>
@@ -71,7 +71,7 @@ class MainGame extends Component {
 
                             <div className="form-row col-md-6 ">
                                 <label>Username 1:</label>
-                                <input type="text" className="form-control" name="username1" onChange={this.changeState} />
+                                <input type="text" className="form-control" name="username1"   defaultValue={username1} onChange={this.changeState} />
                             </div>
                             <div className="form-row col-md-6 ">
                                 <label>User name 2:</label>

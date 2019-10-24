@@ -32,6 +32,8 @@ export default class Board extends React.Component {
 					})
 			rows[indexr] = <div className="board-row" key={indexr}>{cols}</div>
 		})
+
+		
 		
 		//Imperativo
 		/*for (let j = 0; j < sizeMatriz; j++) {
